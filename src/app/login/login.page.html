@@ -1,0 +1,32 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (error) {
+    <ion-alert 
+      header="Error" 
+      [subHeader]="error.error" 
+      [message]="error.message" 
+      isOpen="true" 
+      [buttons]="['OK']" 
+    ></ion-alert>
+  }
+
+  <ion-card>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <ion-item>
+        <ion-label position="floating">Username</ion-label>
+        <ion-input required type="text" formControlName="username"></ion-input>
+      </ion-item>
+      <ion-item class="ion-margin-bottom">
+        <ion-label position="floating">Password</ion-label>
+        <ion-input required type="password" formControlName="password"></ion-input>
+      </ion-item>
+      <ion-button block type="submit" expand="block" [disabled]="loginForm.invalid" >Login</ion-button>
+    </form>
+  </ion-card>
+
+</ion-content>

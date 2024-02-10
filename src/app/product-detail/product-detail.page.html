@@ -1,0 +1,32 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Product Detail</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if (productModel) {
+    <ion-card>
+      <div [style.height.px]="300"  [style.background-image]="'url(' + productModel?.images[0] + ')'">
+      </div>
+
+      <ion-card-header class="ion-margin-bottom">
+        <ion-card-subtitle>{{ productModel?.title }}</ion-card-subtitle>
+        <ion-card-title>{{ productModel?.price ?? 0 | currency: 'USD' }}</ion-card-title>
+        <ion-text>
+          <p>Stock: {{ productModel?.stock ?? 0 }}</p>
+        </ion-text>
+      </ion-card-header>
+      
+      <ion-card-content class="ion-margin-bottom">
+        <ion-text>
+          <h2><b>Description</b></h2>
+          <p class="ion-text-justify">{{ productModel?.description }}</p>
+        </ion-text>
+      </ion-card-content>
+    </ion-card>
+  }
+</ion-content>

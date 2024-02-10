@@ -1,20 +1,45 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
     <ion-title>
-      Blank
+      Home
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  @if (error) {
+    <ion-alert 
+      header="Error" 
+      [subHeader]="error.error" 
+      [message]="error.message" 
+      isOpen="true" 
+      [buttons]="['OK']" 
+    ></ion-alert>
+  } @else {
+    <ion-list class="ion-margin-bottom">
+      @for (product of listProduct; track product.id) {
+        <ion-item button [routerLink]="['/details', product.id]">
+          <ion-thumbnail slot="start">
+            <img [src]="product.images[0]" alt="thumbnail" />
+          </ion-thumbnail>
+          <ion-label>
+            <h3>{{ product.title }}</h3>
+            <p>${{ product.price ?? 0 }}</p>
+            <p>
+              <ion-icon name="storefront"></ion-icon> {{ product.brand }}
+            </p>
+          </ion-label>
+        </ion-item>
+      } @empty {
+        <ion-item lines="none">
+          <ion-label class="ion-text-center">No Products Found</ion-label>
+        </ion-item>
+      }
+    </ion-list>
+    
+    <ion-infinite-scroll (ionInfinite)="loadList($event)">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  }
 </ion-content>
